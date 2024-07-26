@@ -1,6 +1,6 @@
 const { Contract } = window.nearApi;
 import { nearConfig } from "./near-api";
-import { initFtContract, toNormalisedAmount } from "./FtContract"
+import { toNormalisedAmount } from "./FtContract"
 
 export async function initContract(contractName) {
   return await new Contract(window.walletConnection.account(), contractName, {

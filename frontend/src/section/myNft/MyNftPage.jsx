@@ -111,11 +111,11 @@ export default function MyNftPage({handleClick}) {
   return (
     <div className="px-4 py-4 sm:px-6 lg:px-8">
       <div className="space-y-8">
-        {Object.entries(nfts_by_contract).map(([k, v], _) =>
+        {Object.entries(nfts_by_contract).map(([k, v]) =>
           <div key={k}>
             <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {
-                v.map(({ token_id, title, nft_contract_id, media, lender_id, borrower_id, lease_start_ts_nano, lease_end_ts_nano, lease_id }) => {
+                v.map(({ token_id, title, nft_contract_id, media, lender_id, borrower_id, lease_end_ts_nano, lease_id }) => {
                 
                   return <div
                     key={nft_contract_id + "/" + token_id}
@@ -138,7 +138,7 @@ export default function MyNftPage({handleClick}) {
                       }
                       {lease_end_ts_nano && lease_end_ts_nano < Date.now() * MS_TO_NS_SCALE &&
                         lender_id && lender_id == window.accountId &&
-                        <button onClick={_ => claimBack(lease_id)} className="primary-btn flex-1 w-32 text-center"> Claim back </button>
+                        <button onClick={() => claimBack(lease_id)} className="primary-btn flex-1 w-32 text-center"> Claim back </button>
                       }
                       <button onClick={() => handleClick({title: "details", contractId: nft_contract_id, tokenId: token_id})} 
                         className="btn flex-1 w-32 text-center"> Details </button>

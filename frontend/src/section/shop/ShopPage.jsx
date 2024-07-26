@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery, gql } from "@apollo/client";
 import { getAllowedFTs, initContract, listingsByNftContractId } from "../../near-api";
 import { fromNormalisedAmount, ftSymbol } from "../../FtContract"
-import { contractIdToDescription, contractIdToName, dateTimeString, durationString, mintbaseStoreUrl } from "../../Util";
+import { dateTimeString, durationString } from "../../Util";
 
 const GET_TOKENS = gql`
     query GetTokens($nft_contract_id: String!, $nft_token_ids: [String!]!) {
@@ -65,7 +65,7 @@ export default function ShopPage({handleClick}) {
       {listings.length == 0 && <div className="text-center">No NFTs available for rent at the moment</div>}
       <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {
-          listings.map(({ nft_token_id, owner_id, price, ft_contract_id,nft_contract_id, lease_start_ts_nano, lease_end_ts_nano, }) => {
+          listings.map(({ nft_token_id, price, ft_contract_id,nft_contract_id, lease_start_ts_nano, lease_end_ts_nano }) => {
             let nft_info = nft_info_by_token_id[nft_token_id];
             return (
               <div key={contractId + "/" + nft_token_id} className="border p-4 border-black rounded-md space-y-4 w-72">

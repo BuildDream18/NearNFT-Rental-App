@@ -15,7 +15,7 @@ export default function ListingCreationPage({params, handleClick}) {
   const [rent, setRent] = React.useState(0);
   const [royalty, setRoyalty] = React.useState(0);
   // TODO(libo): Set marketplace fee
-  const [marketFee, setMarketFee] = React.useState(0);
+  const [marketFee] = React.useState(0);
   const [validationErrors, setValidationErrors] = React.useState({});
 
   let validate = () => {
