@@ -1,0 +1,38 @@
+{
+  "name": "nft-rental",
+  "version": "1.0.0",
+  "license": "(MIT AND Apache-2.0)",
+  "scripts": {
+    "lint": "cd contract && cargo fmt && cargo clippy",
+    "start": "cd frontend && pnpm dev",
+
+    "deploy": "yarn build:contract && cd contract && near dev-deploy --wasmFile ./target/wasm32-unknown-unknown/release/nft_rental.wasm",
+    "deploy_testnet": "yarn build:contract && cd contract && near deploy --wasmFile ./target/wasm32-unknown-unknown/release/nft_rental.wasm --accountId subaccount.ricardo-dev.testnet",
+    "deploy_mainnet": "yarn build:contract && cd contract && NEAR_ENV=mainnet near deploy --wasmFile ./target/wasm32-unknown-unknown/release/nft_rental.wasm --accountId subaccount.ricardo-dev.near",
+    "deploy:marketplace": "yarn build:marketplace && cd marketplace && near dev-deploy --wasmFile ./target/wasm32-unknown-unknown/release/rental_marketplace.wasm",
+    "deploy_testnet:marketplace": "yarn build:marketplace && cd marketplace && near deploy --wasmFile ./target/wasm32-unknown-unknown/release/rental_marketplace.wasm --accountId ricardo-dev.testnet",
+
+    "preview": "cd frontend && yarn vite preview",
+
+    "build": "yarn build:contract && yarn build:web && yarn build:marketplace",
+    "build:web": "cd frontend && yarn build",
+    "build_testnet:web": "cd frontend && yarn build_testnet",
+    "build_mainnet:web": "cd frontend && yarn build_mainnet",
+    "build:contract": "cd contract && rustup target add wasm32-unknown-unknown && cargo build --all --target wasm32-unknown-unknown --release",
+    "build:marketplace": "cd marketplace && rustup target add wasm32-unknown-unknown && cargo build --all --target wasm32-unknown-unknown --release",
+
+    "test": "yarn test:unit && yarn test:integration && yarn test:marketplace_unit",
+    "test:unit": "cd contract && cargo test",
+    "test:marketplace_unit": "cd marketplace && cargo test",
+    "test:integration": "yarn build:contract && yarn build:marketplace && cd integration-tests && cargo build --all --target wasm32-unknown-unknown --release && cargo test --test integration -- --nocapture",
+    "deps-install": "yarn install && cd frontend && pnpm install && cd .."
+  },
+  "devDependencies": {
+    "near-api-js": "^1.0.0",
+    "near-cli": "^3.3.0"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.7.0",
+    "@heroicons/react": "^2.0.10"
+  }
+}
