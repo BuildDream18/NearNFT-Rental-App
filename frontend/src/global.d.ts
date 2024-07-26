@@ -1,3 +1,8 @@
+interface CurrencyOption {
+  code: string;
+  symbol: string;
+}
+
 interface Window {
-  CURRENCY_OPTIONS: any; // Replace 'any' with the appropriate type if known
+  CURRENCY_OPTIONS: CurrencyOption[];
 }
