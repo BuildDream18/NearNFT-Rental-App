@@ -44,11 +44,13 @@ const LandingPage = () => {
   const [shopRent, setShopRent] = useState({});
 
   useEffect(() => {
-    const fetchData = async () => {
-      await initContract();
-      window.CURRENCY_OPTIONS = await getAllowedFTs();
-    };
-    fetchData();
+    if (typeof window !== "undefined") {
+      const fetchData = async () => {
+        await initContract();
+        window.CURRENCY_OPTIONS = await getAllowedFTs();
+      };
+      fetchData();
+    }
   }, []);
 
 
@@ -61,7 +63,7 @@ const LandingPage = () => {
     setLendModal(name)
   }
 
-  const handleShop = (item: string) => {
+  const handleShop = (item: { title: string }) => {
     setLendModal(item.title);
     setShopRent(item);
   }
