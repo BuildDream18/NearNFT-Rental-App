@@ -46,7 +46,9 @@ const LandingPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       await initContract();
-      window.CURRENCY_OPTIONS = await getAllowedFTs();
+      if (typeof window !== 'undefined') {
+        window.CURRENCY_OPTIONS = await getAllowedFTs();
+      }
     };
     fetchData();
   }, []);

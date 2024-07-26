@@ -1,11 +1,14 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
 export function CurrencySelector({ selected, setSelected, disabled }) {
-  const [currencyOptions, setCurrencyOptions] = React.useState([]);
+  const [currencyOptions, setCurrencyOptions] = useState([]);
 
-  React.useEffect(() => {
+  // if (!selected || !setSelected || !disabled) {
+  //   return null;
+  // }
+  useEffect(() => {
     setCurrencyOptions(window.CURRENCY_OPTIONS || []);
   }, []);
 
@@ -13,7 +16,7 @@ export function CurrencySelector({ selected, setSelected, disabled }) {
     <Listbox value={selected} onChange={setSelected} disabled={disabled}>
       <div className="relative">
         <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-2 h-10 pl-3 pr-10 text-left shadow-md sm:text-sm">
-          <span className="block truncate">{selected.symbol}</span>
+          <span className="block truncate">{selected?.symbol}</span>
           <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
             <ChevronUpDownIcon
               className="h-5 w-5 text-gray-400"

@@ -71,7 +71,7 @@ export default function MyNftPage({handleClick}) {
     return <p>Error</p>;
   }
   if (loading) return "Loading";
-  
+  if (!data) return "No data";
   const nfts = [...data.user_owned];
   for (let l of lendings) {
     let [lease_id, i] = l;

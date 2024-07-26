@@ -1,5 +1,7 @@
-import LandingPage from "@/components/Landing";
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
+
+const LandingPage = dynamic(() => import("@/components/Landing"), { ssr: false })
 
 export const metadata: Metadata = {
   title: "Mintbase Simple Marketplace Example",
@@ -10,12 +12,9 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  if (typeof window !== "undefined") {
-    return (
-      <main className="px-2 sm:px-8 md:px-24 py-12">
-        <LandingPage />
-      </main>
-    );
-  }
-  return <></>;
+  return (
+    <main className="px-2 sm:px-8 md:px-24 py-12">
+      <LandingPage />
+    </main>
+  );
 }

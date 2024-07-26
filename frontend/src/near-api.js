@@ -25,38 +25,40 @@ export async function initContract() {
   );
   // Initializing Wallet based Account. It can work with NEAR testnet wallet that
   const appKeyPrefix = "uniqueAppName"; // Replace "uniqueAppName" with a unique identifier for your app
-  window.walletConnection = new WalletConnection(near, appKeyPrefix);
-  
-  window.accountId = window.walletConnection.getAccountId();
-  
-  window.contract = await new Contract(
-    window.walletConnection.account(),
-    nearConfig.contractName,
-    {
-      viewMethods: [
-        "list_listings_by_nft_contract_id",
-        "list_allowed_nft_contract_ids",
-        "list_allowed_ft_contract_ids",
-        "get_listing_by_id",
-        "get_rental_contract_id"
-      ],
-      changeMethods: [],
-    }
-  );
-  
-  // Initializing the rental contract.
-  try{
-    window.rentalContractId = await getRentalContractId();
-  } catch(e) {
-  }
 
-  window.rentalContract = await new Contract(
-    window.walletConnection.account(),
-    window.rentalContractId,
-    {
-      viewMethods: ["leases_by_borrower", "leases_by_owner", "lease_by_contract_and_token"],
-      changeMethods: ["claim_back"],
-    });
+  if (typeof window !== 'undefined') {
+    window.walletConnection = new WalletConnection(near, appKeyPrefix);
+    window.accountId = window.walletConnection.getAccountId();
+  
+    window.contract = await new Contract(
+      window.walletConnection.account(),
+      nearConfig.contractName,
+      {
+        viewMethods: [
+          "list_listings_by_nft_contract_id",
+          "list_allowed_nft_contract_ids",
+          "list_allowed_ft_contract_ids",
+          "get_listing_by_id",
+          "get_rental_contract_id"
+        ],
+        changeMethods: [],
+      }
+    );
+  
+    // Initializing the rental contract.
+    try{
+      window.rentalContractId = await getRentalContractId();
+    } catch(e) {
+    }
+
+    window.rentalContract = await new Contract(
+      window.walletConnection.account(),
+      window.rentalContractId,
+      {
+        viewMethods: ["leases_by_borrower", "leases_by_owner", "lease_by_contract_and_token"],
+        changeMethods: ["claim_back"],
+      });
+  }
 }
 
 export async function getRentalContractId() {

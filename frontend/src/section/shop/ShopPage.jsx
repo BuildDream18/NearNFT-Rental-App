@@ -29,7 +29,10 @@ export default function ShopPage({handleClick}) {
   React.useEffect(() => {
     async function fetchListings() {
       await initContract();
-      window.CURRENCY_OPTIONS = await getAllowedFTs();
+
+      if (typeof window !== 'undefined') {
+        window.CURRENCY_OPTIONS = await getAllowedFTs();
+      }
 
       listingsByNftContractId(contractId).then((listings) => {
           setListings(() => listings)

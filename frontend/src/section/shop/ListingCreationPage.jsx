@@ -44,18 +44,17 @@ export default function ListingCreationPage({params, handleClick}) {
 
   let calcuateRoyaltySplit = async () => {
     const contract = await initContract(contractId);
-    const priceNormalised = toNormalisedAmount(rentCurrency.address, rent);
-
+    const priceNormalised = toNormalisedAmount(rentCurrency?.address, rent);
 
     const payouts = await getPayout(contract, tokenId, priceNormalised);
+    console.log(`payouts`, payouts)
     let royalty = 0;
     for (let accountId of Object.keys(payouts)) {
-      if (accountId != window.accountId) {
+      if (accountId == window.accountId) {
         royalty += payouts[accountId];
       }
     }
-
-    return fromNormalisedAmount(rentCurrency.address, royalty);
+    return fromNormalisedAmount(rentCurrency?.address, royalty);
   }
 
   // If the transactionHashes appears in the URL paramters, redirect to the shop page.
@@ -68,7 +67,7 @@ export default function ListingCreationPage({params, handleClick}) {
   // Calculate the royalty split
   React.useEffect(() => {
     (async () => setRoyalty(await calcuateRoyaltySplit()))();
-  }, [rent])
+  }, [rent, rentCurrency])
 
   let onSubmit = async () => {
     const errors = validate();
@@ -80,7 +79,7 @@ export default function ListingCreationPage({params, handleClick}) {
     const startTsNano = new Date(startTimeStr).valueOf() * MS_TO_NS_SCALE;
     const endTsNano = new Date(endTimeStr).valueOf() * MS_TO_NS_SCALE;
 
-    newListing(contract, tokenId, startTsNano, endTsNano, rentCurrency.address, rent);
+    newListing(contract, tokenId, startTsNano, endTsNano, rentCurrency?.address, rent);
   };
 
   let errorMessage = (message) => {
@@ -134,7 +133,7 @@ export default function ListingCreationPage({params, handleClick}) {
                   <div className="mt-1 sm:w-2/3 sm:mt-0 max-w-lg">
                     {errorMessage(validationErrors["rent"])}
                     <div className="flex flex-row space-x-2 justify-center">
-                      <div className="w-1/3 mt-8">
+                      <div className="w-1/3">
                         <CurrencySelector
                           selected={rentCurrency}
                           setSelected={setRentCurrency} />
@@ -158,9 +157,9 @@ export default function ListingCreationPage({params, handleClick}) {
                   </label>
                   <div className="mt-1 sm:w-2/3 sm:mt-0 max-w-lg">
                     <div className="flex flex-col space-y-2">
-                      <div>Royalty .......................... {royalty} {rentCurrency.symbol}</div>
-                      <div>Market ........................... {marketFee} {rentCurrency.symbol}</div>
-                      <div>Total ............................ {marketFee + royalty} {rentCurrency.symbol}</div>
+                      <div>Royalty .......................... {royalty} {rentCurrency?.symbol}</div>
+                      <div>Market ........................... {marketFee} {rentCurrency?.symbol}</div>
+                      <div>Total ............................ {marketFee + royalty} {rentCurrency?.symbol}</div>
                     </div>
                   </div>
                 </div>
