@@ -1,14 +1,5 @@
-import {
-  EIconName,
-  MbDropdownMenu,
-  MbIcon,
-  MbMenuWrapper,
-  MbTab,
-} from "mintbase-ui";
-import { useState } from "react";
-import { useStoreData } from "../hooks/useStoreData";
 import { useStoreNfts } from "../hooks/useStoreNfts";
-import { SelectedNft, Store } from "../types/types";
+import { SelectedNft } from "../types/types";
 import { Item, LoadingItem } from "./Item";
 import { StoreNftsData } from "@mintbase-js/data/lib/api/storeNfts/storeNfts.types";
 

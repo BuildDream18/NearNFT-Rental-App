@@ -1,5 +1,4 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import { useQuery, gql } from "@apollo/client";
 import { getAllowedFTs, initContract, listingsByNftContractId } from "../../near-api";
 import { fromNormalisedAmount, ftSymbol } from "../../FtContract"
@@ -23,8 +22,8 @@ const GET_TOKENS = gql`
 
 export default function ShopPage({handleClick}) {
   const contractId  = "ricardostore.mintspace2.testnet";
-  const shopName = contractIdToName(contractId);
-  const shopDescription = contractIdToDescription(contractId);
+  // const shopName = contractIdToName(contractId);
+  // const shopDescription = contractIdToDescription(contractId);
   const [listings, setListings] = React.useState([]);
 
   React.useEffect(() => {
@@ -33,7 +32,7 @@ export default function ShopPage({handleClick}) {
       window.CURRENCY_OPTIONS = await getAllowedFTs();
 
       listingsByNftContractId(contractId).then((listings) => {
-          setListings((_) => listings)
+          setListings(() => listings)
         }
       );
     }

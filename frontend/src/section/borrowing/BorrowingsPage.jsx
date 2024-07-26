@@ -7,7 +7,7 @@ export default function BorrowingsPage() {
   React.useEffect(() => {
     async function fetchBorrowings() {
       myBorrowings(window.accountId).then((borrowings) =>
-        setBorrowings((_) => borrowings)
+        setBorrowings(() => borrowings)
       );
     }
     fetchBorrowings();

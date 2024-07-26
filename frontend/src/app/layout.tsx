@@ -9,7 +9,6 @@ import { MintbaseWalletContextProvider } from "@mintbase-js/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Header from "@/components/header";
 import { mbjs } from "@mintbase-js/sdk";
-import { SocialMedias } from "@/components/Social";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
 const inter = Inter({ subsets: ["latin"] });

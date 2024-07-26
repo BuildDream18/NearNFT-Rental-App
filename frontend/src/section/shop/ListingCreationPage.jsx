@@ -1,12 +1,10 @@
 import React from "react";
 
 import { CurrencySelector } from "../../components/CurrencySelector";
-import { useParams, useSearchParams } from "react-router-dom";
 import { initContract, newListing, getPayout } from "../../NftContract";
 import { fromNormalisedAmount, toNormalisedAmount } from "../../FtContract";
 import { NftInfo } from "../../NftInfo";
 import { MS_TO_NS_SCALE } from "../../Util";
-import { title } from "process";
 
 export default function ListingCreationPage({params, handleClick}) {
   const { contractId, tokenId } = params;
@@ -171,7 +169,7 @@ export default function ListingCreationPage({params, handleClick}) {
               <button className="btn" onClick={handleClick} >
                 Cancel
               </button>
-              <button className="primary-btn" onClick={(_) => onSubmit()} >
+              <button className="primary-btn" onClick={() => onSubmit()} >
                 Submit
               </button>
             </div>

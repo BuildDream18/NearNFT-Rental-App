@@ -40,10 +40,10 @@ export default function AcceptBorrowingPage({params, handleClick}) {
   React.useEffect(() => {
     async function fetch() {
       myLendings(window.accountId).then((lendings) =>
-        setLendings((_) => lendings)
+        setLendings(() => lendings)
       );
       myBorrowings(window.accountId).then((borrowings) =>
-        setBorrowings((_) => borrowings)
+        setBorrowings(() => borrowings)
       );
     }
     fetch();

@@ -1,7 +1,6 @@
 "use client";
 
 import { ESize, EState, MbButton } from "mintbase-ui";
-import Items from "./Items";
 import { useEffect, useState } from "react";
 import { SelectedNft } from "@/types/types";
 import { getAllowedFTs, initContract } from "../near-api";

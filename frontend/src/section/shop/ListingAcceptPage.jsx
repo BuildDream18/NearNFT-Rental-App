@@ -2,18 +2,16 @@ import React from "react";
 import { nearConfig, listingByContractIdAndTokenId } from "../../near-api";
 import { fromNormalisedAmount, ftSymbol, initFtContract } from "../../FtContract";
 import { NftInfo } from "../../NftInfo";
-import { useParams } from "react-router-dom";
 import { dateTimeString } from "../../Util";
 
 export default function ListingAcceptPage({params}) {
-  // let { contractId, tokenId } = useParams()
   let { contractId, tokenId } = params
   const [listing, setListing] = React.useState(null);
 
   React.useEffect(() => {
     async function fetchListing() {
       let listing = await listingByContractIdAndTokenId(contractId, tokenId);
-      setListing((_) => listing);
+      setListing(() => listing);
     }
     fetchListing();
   }, [contractId, tokenId]);
@@ -102,7 +100,7 @@ export default function ListingAcceptPage({params}) {
                   </a>
                   <button
                     className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    onClick={(_) => onSubmit()}
+                    onClick={() => onSubmit()}
                   >
                     Accept & Pay
                   </button>

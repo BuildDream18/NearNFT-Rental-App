@@ -23,7 +23,7 @@ export function NftInfo({ contractId, tokenId }) {
   React.useEffect(() => {
     async function fetchLease() {
       let lease = await leaseByContractIdAndTokenId(contractId, tokenId);
-      setLease((_) => lease);
+      setLease(() => lease);
     }
     fetchLease();
   }, [contractId, tokenId]);

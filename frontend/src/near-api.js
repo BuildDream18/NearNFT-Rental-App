@@ -1,7 +1,6 @@
 import "near-api-js/dist/near-api-js.min.js";
 const { connect, Contract, keyStores, WalletConnection } = window.nearApi;
 import { getConfig } from "./near-config";
-import { cache } from "react";
 import { initFtContract } from "./FtContract";
 
 export const nearConfig = getConfig(process.env.MODE || "development");
@@ -93,7 +92,7 @@ export async function listingsByNftContractId(nftContractId) {
   return listings;
 }
 
-export async function listAllowedNftContractIds(nftContractId) {
+export async function listAllowedNftContractIds() {
   return await window.contract.list_allowed_nft_contract_ids({})
 }
 

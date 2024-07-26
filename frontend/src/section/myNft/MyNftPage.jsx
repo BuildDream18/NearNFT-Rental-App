@@ -1,6 +1,5 @@
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
-// import { useQuery } from "react-query";
 import { myLendings, myBorrowings, claimBack } from "../../near-api";
 import { MS_TO_NS_SCALE } from "../../Util";
 import { durationString } from "../../Util";
@@ -35,10 +34,6 @@ const GET_TOKENS = gql`
     }
   `;
 
-
-let claim = (leaseId) => {
-  claimBack(leaseId);
-};
 export default function MyNftPage({handleClick}) {
 
   const [lendings, setLendings] = React.useState([]);
@@ -47,10 +42,10 @@ export default function MyNftPage({handleClick}) {
   React.useEffect(() => {
     async function fetch() {
       myLendings(window.accountId).then((lendings) =>
-        setLendings((_) => lendings)
+        setLendings(() => lendings)
       );
       myBorrowings(window.accountId).then((borrowings) =>
-        setBorrowings((_) => borrowings)
+        setBorrowings(() => borrowings)
       );
     }
     fetch();

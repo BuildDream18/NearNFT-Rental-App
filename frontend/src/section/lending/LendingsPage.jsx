@@ -6,7 +6,7 @@ export default function LendingsPage() {
   React.useEffect(() => {
     async function fetchLendings() {
       myLendings(window.accountId).then((lendings) =>
-        setLendings((_) => lendings)
+        setLendings(() => lendings)
       );
     }
     fetchLendings();
@@ -86,7 +86,7 @@ export default function LendingsPage() {
                           {expired && lending.state == "Active" ? (
                             <button
                               className="text-indigo-600 hover:text-indigo-900"
-                              onClick={(_) => claim(key)}
+                              onClick={() => claim(key)}
                             >
                               Claim
                             </button>
