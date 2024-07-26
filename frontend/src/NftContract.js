@@ -3,6 +3,7 @@ import { toNormalisedAmount } from "./FtContract"
 
 export async function initContract(contractName) {
   const { Contract } = window.nearApi;
+  console.log("account~~~~~~~!!!!!", window.walletConnection.account())
   return await new Contract(window.walletConnection.account(), contractName, {
     viewMethods: ["nft_tokens_for_owner", "nft_token", "nft_payout"],
     changeMethods: ["nft_approve"],
