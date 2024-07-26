@@ -5,8 +5,11 @@ import { initContract, newListing, getPayout } from "../../NftContract";
 import { fromNormalisedAmount, toNormalisedAmount } from "../../FtContract";
 import { NftInfo } from "../../NftInfo";
 import { MS_TO_NS_SCALE } from "../../Util";
+import { useMbWallet } from "@mintbase-js/react";
 
 export default function ListingCreationPage({params, handleClick}) {
+  const { activeAccountId } = useMbWallet();
+
   const { contractId, tokenId } = params;
   const [startTimeStr, setStartTimeStr] = React.useState("");
   const [endTimeStr, setEndTimeStr] = React.useState("");
@@ -50,7 +53,7 @@ export default function ListingCreationPage({params, handleClick}) {
     console.log(`payouts`, payouts)
     let royalty = 0;
     for (let accountId of Object.keys(payouts)) {
-      if (accountId == window.accountId) {
+      if (accountId == window.accountId || activeAccountId) {
         royalty += payouts[accountId];
       }
     }

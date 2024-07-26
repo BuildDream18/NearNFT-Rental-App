@@ -2,6 +2,7 @@ import React from "react";
 import { NftInfo } from "../../NftInfo";
 import { gql, useQuery } from "@apollo/client";
 import { myBorrowings, myLendings } from "../../near-api";
+import { useMbWallet } from "@mintbase-js/react";
 
 const GET_TOKENS = gql`
     query GetTokens($rental_contract_id: String!, $account_id: String!) {
@@ -33,6 +34,8 @@ const GET_TOKENS = gql`
   `;
 
 export default function AcceptBorrowingPage({params, handleClick}) {
+  const { activeAccountId } = useMbWallet();
+
   const { contractId, tokenId,  title } = params;
   const [accountId, setAccountId] = React.useState();
   const [rentalContractId, setRentalContractId] = React.useState();
@@ -40,7 +43,7 @@ export default function AcceptBorrowingPage({params, handleClick}) {
   const [borrowings, setBorrowings] = React.useState([]);
 
   React.useEffect(() => {
-    const accountId = window.accountId;
+    const accountId = window.accountId || activeAccountId;
     setAccountId(accountId);
     setRentalContractId(window.rentalContract.contractId);
 

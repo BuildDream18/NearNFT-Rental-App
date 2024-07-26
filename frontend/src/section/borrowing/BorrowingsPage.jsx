@@ -1,12 +1,15 @@
 import React from "react";
 import { myBorrowings } from "../../near-api";
+import { useMbWallet } from "@mintbase-js/react";
 
 export default function BorrowingsPage() {
+  const { activeAccountId } = useMbWallet();
+  
   const [borrowings, setBorrowings] = React.useState([]);
 
   React.useEffect(() => {
     async function fetchBorrowings() {
-      myBorrowings(window.accountId).then((borrowings) =>
+      myBorrowings(window.accountId || activeAccountId).then((borrowings) =>
         setBorrowings(() => borrowings)
       );
     }
