@@ -43,6 +43,7 @@ export default function MyNftPage({handleClick}) {
   React.useEffect(() => {
     const accountId = window.accountId;
     setAccountId(accountId);
+    console.log("accountId~~~~~~~~~~~", accountId);
     setRentalContractId(window.rentalContract.contractId);
 
     async function fetch() {
