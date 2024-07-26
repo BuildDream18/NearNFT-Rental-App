@@ -39,17 +39,18 @@ export default function AcceptBorrowingPage({params, handleClick}) {
 
   React.useEffect(() => {
     async function fetch() {
-      myLendings(window.accountId).then((lending) => {
-        lendings = lending;
-        setLendings(() => lendings);
-      });
-      myBorrowings(window.accountId).then((borrowing) => {
-        borrowings = borrowing;
-        setBorrowings(() => borrowings);
-      });
+      myLendings(window.accountId).then((lendings) =>
+        setLendings(() => lendings)
+      );
+      myBorrowings(window.accountId).then((borrowings) =>
+        setBorrowings(() => borrowings)
+      );
     }
     fetch();
   }, []);
+
+  console.log(lendings);
+  console.log(borrowings);
   
   const { data } = useQuery(
     GET_TOKENS,
