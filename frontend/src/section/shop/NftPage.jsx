@@ -34,15 +34,21 @@ const GET_TOKENS = gql`
 
 export default function AcceptBorrowingPage({params, handleClick}) {
   const { contractId, tokenId,  title } = params;
+  const [accountId, setAccountId] = React.useState();
+  const [rentalContractId, setRentalContractId] = React.useState();
   const [lendings, setLendings] = React.useState([]);
   const [borrowings, setBorrowings] = React.useState([]);
 
   React.useEffect(() => {
+    const accountId = window.accountId;
+    setAccountId(accountId);
+    setRentalContractId(window.rentalContract.contractId);
+
     async function fetch() {
-      myLendings(window.accountId).then((lendings) =>
+      myLendings(accountId).then((lendings) =>
         setLendings(() => lendings)
       );
-      myBorrowings(window.accountId).then((borrowings) =>
+      myBorrowings(accountId).then((borrowings) =>
         setBorrowings(() => borrowings)
       );
     }
@@ -56,9 +62,10 @@ export default function AcceptBorrowingPage({params, handleClick}) {
     GET_TOKENS,
     {
       variables: {
-        rental_contract_id: window.rentalContract.contractId,
-        account_id: window.accountId
-      }
+        rental_contract_id: rentalContractId,
+        account_id: accountId
+      },
+      skip: !accountId || !rentalContractId,
     }
   );
   const valid = data?.user_owned.find((nft) => nft.token_id === tokenId);

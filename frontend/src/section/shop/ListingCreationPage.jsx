@@ -11,12 +11,16 @@ export default function ListingCreationPage({params, handleClick}) {
   const [startTimeStr, setStartTimeStr] = React.useState("");
   const [endTimeStr, setEndTimeStr] = React.useState("");
   
-  const [rentCurrency, setRentCurrency] = React.useState(window.CURRENCY_OPTIONS[0]);
+  const [rentCurrency, setRentCurrency] = React.useState();
   const [rent, setRent] = React.useState(0);
   const [royalty, setRoyalty] = React.useState(0);
   // TODO(libo): Set marketplace fee
   const [marketFee] = React.useState(0);
   const [validationErrors, setValidationErrors] = React.useState({});
+
+  React.useEffect(() => {
+    setRentCurrency(window.CURRENCY_OPTIONS[0]);
+  }, []);
 
   let validate = () => {
     const errors = {}

@@ -19,8 +19,10 @@ export function NftInfo({ contractId, tokenId }) {
   `;
 
   const [lease, setLease] = React.useState();
-
+  const [rentalContractId, setRentalContractId] = React.useState();  
+  
   React.useEffect(() => {
+    setRentalContractId(window.rentalContract.contractId);
     async function fetchLease() {
       let lease = await leaseByContractIdAndTokenId(contractId, tokenId);
       setLease(() => lease);
@@ -29,6 +31,7 @@ export function NftInfo({ contractId, tokenId }) {
   }, [contractId, tokenId]);
 
   console.log(lease);
+  console.log(rentalContractId);
 
   const { loading, error, data } = useQuery(GET_TOKEN, { variables: { contract_id: contractId, token_id: tokenId } });
   if (loading) return <p>Loading ...</p>
@@ -36,9 +39,6 @@ export function NftInfo({ contractId, tokenId }) {
 
   let nft = data.mb_views_nft_tokens[0];
   if (!nft) return <p>Error: NFT info not found!</p>
-
-
-
 
   return (
     <div className="sm:flex sm:flex-row justify-between">

@@ -1,5 +1,4 @@
 import "near-api-js/dist/near-api-js.min.js";
-const { connect, Contract, keyStores, WalletConnection } = window.nearApi;
 import { getConfig } from "./near-config";
 import { initFtContract } from "./FtContract";
 
@@ -17,6 +16,7 @@ export function signInWithNearWallet() {
 
 // Initialize contract & set global variables
 export async function initContract() {
+  const { connect, Contract, keyStores, WalletConnection } = window.nearApi;
   const near = await connect(
     Object.assign(
       { deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() } },

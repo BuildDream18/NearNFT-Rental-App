@@ -3,6 +3,11 @@ import { Listbox, Transition } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
 export function CurrencySelector({ selected, setSelected, disabled }) {
+  const [currencyOptions, setCurrencyOptions] = React.useState([]);
+
+  React.useEffect(() => {
+    setCurrencyOptions(window.CURRENCY_OPTIONS || []);
+  }, []);
 
   return (
     <Listbox value={selected} onChange={setSelected} disabled={disabled}>
@@ -23,7 +28,7 @@ export function CurrencySelector({ selected, setSelected, disabled }) {
           leaveTo="opacity-0"
         >
           <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-sm ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {window.CURRENCY_OPTIONS.map((item, idx) => (
+            {currencyOptions.map((item, idx) => (
               <Listbox.Option
                 key={idx}
                 className={({ active }) =>
