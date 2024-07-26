@@ -44,13 +44,11 @@ const LandingPage = () => {
   const [shopRent, setShopRent] = useState({});
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const fetchData = async () => {
-        await initContract();
-        window.CURRENCY_OPTIONS = await getAllowedFTs();
-      };
-      fetchData();
-    }
+    const fetchData = async () => {
+      await initContract();
+      window.CURRENCY_OPTIONS = await getAllowedFTs();
+    };
+    fetchData();
   }, []);
 
 
