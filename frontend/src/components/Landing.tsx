@@ -14,7 +14,7 @@ import AcceptBorrowingPage from "../section/shop/NftPage"
 import ListingCreationPage from "../section/shop/ListingCreationPage"
 import NftDetails from "../section/shop/NftPage"
 
-export function classNames(...classes: any) {
+export function classNames(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
@@ -57,11 +57,11 @@ const LandingPage = () => {
     setShowBuyModal(false);
   };
 
-  const handleRentModal = (name: any) => {
+  const handleRentModal = (name: string) => {
     setLendModal(name)
   }
 
-  const handleShop = (item: any) => {
+  const handleShop = (item: string) => {
     setLendModal(item.title);
     setShopRent(item);
   }
