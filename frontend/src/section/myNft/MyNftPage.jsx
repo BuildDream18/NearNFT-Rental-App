@@ -55,7 +55,8 @@ export default function MyNftPage({handleClick}) {
     }
     fetch();
   }, []);
-
+console.log("accountId", accountId);
+console.log("rentalContractId", rentalContractId);
   const { loading, error, data } = useQuery(
     GET_TOKENS,
     {
