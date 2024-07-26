@@ -3,6 +3,7 @@ import { useQuery, gql } from "@apollo/client";
 import { myLendings, myBorrowings, claimBack } from "../../near-api";
 import { MS_TO_NS_SCALE } from "../../Util";
 import { durationString } from "../../Util";
+import { useMbWallet } from "@mintbase-js/react";
 
 // TODO(libo): use more efficient way to query tokens under lease.
 const GET_TOKENS = gql`
@@ -35,16 +36,17 @@ const GET_TOKENS = gql`
   `;
 
 export default function MyNftPage({handleClick}) {
+  
+  const { activeAccountId } = useMbWallet();
+
   const [accountId, setAccountId] = React.useState();
   const [rentalContractId, setRentalContractId] = React.useState();
   const [lendings, setLendings] = React.useState([]);
   const [borrowings, setBorrowings] = React.useState([]);
 
   React.useEffect(() => {
-    const accountId = window.accountId;
+    const accountId = window.accountId || activeAccountId;
     setAccountId(accountId);
-    console.log("window~~~~~~~~~~~", window);
-    console.log("accountId~~~~~~~~~~~", accountId);
     setRentalContractId(window.rentalContract.contractId);
 
     async function fetch() {
@@ -58,7 +60,6 @@ export default function MyNftPage({handleClick}) {
     fetch();
   }, []);
 console.log("accountId", accountId);
-console.log("rentalContractId", rentalContractId);
   const { loading, error, data } = useQuery(
     GET_TOKENS,
     {
