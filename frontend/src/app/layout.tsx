@@ -22,7 +22,7 @@ export const getCallbackUrl = () => {
     callbackUrl =
       isDev || window.location?.host.includes('localhost')
         ? `http://${window.location.host}`
-        : `}`
+        : `process.env.NEXT_PUBLIC_URL`
   }
 
   return callbackUrl
