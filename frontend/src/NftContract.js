@@ -2,8 +2,9 @@ import { nearConfig } from "./near-api";
 import { toNormalisedAmount } from "./FtContract"
 
 export async function initContract(contractName) {
-  const { Contract } = window.nearApi;
+  const { Contract, WalletConnection } = window.nearApi;
   console.log("account~~~~~~~!!!!!", window.walletConnection.account())
+  console.log("nearAPI~~~~~~~!!!!!", window.nearApi)
   return await new Contract(window.walletConnection.account(), contractName, {
     viewMethods: ["nft_tokens_for_owner", "nft_token", "nft_payout"],
     changeMethods: ["nft_approve"],

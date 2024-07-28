@@ -29,7 +29,7 @@ export async function initContract() {
   if (typeof window !== 'undefined') {
     window.walletConnection = new WalletConnection(near, appKeyPrefix);
     window.accountId = window.walletConnection.getAccountId();
-  
+  console.log("near!~~~~", window.walletConnection);
     window.contract = await new Contract(
       window.walletConnection.account(),
       nearConfig.contractName,
