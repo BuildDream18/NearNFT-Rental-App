@@ -20,9 +20,9 @@ export const getCallbackUrl = () => {
 
   if (typeof window !== 'undefined') {
     callbackUrl =
-      isDev || window.location?.host.includes('localhost')
+      isDev && window.location?.host.includes('localhost')
         ? `http://${window.location.host}`
-        : `process.env.NEXT_PUBLIC_URL`
+        : process.env.NEXT_PUBLIC_URL || '';
   }
 
   return callbackUrl
