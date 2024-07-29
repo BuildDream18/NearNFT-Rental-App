@@ -1,6 +1,7 @@
 import React from "react";
 
 import { CurrencySelector } from "../../components/CurrencySelector";
+import { SubScriptionSelector } from "../../components/SubScriptionSelector";
 import { initContract, newListing, getPayout } from "../../NftContract";
 import { fromNormalisedAmount, toNormalisedAmount } from "../../FtContract";
 import { NftInfo } from "../../NftInfo";
@@ -13,6 +14,7 @@ export default function ListingCreationPage({params, handleClick}) {
   const { contractId, tokenId } = params;
   const [startTimeStr, setStartTimeStr] = React.useState("");
   const [endTimeStr, setEndTimeStr] = React.useState("");
+  const [subScription, setSubScription] = React.useState("");
   
   const [rentCurrency, setRentCurrency] = React.useState();
   const [rent, setRent] = React.useState(0);
@@ -27,17 +29,17 @@ export default function ListingCreationPage({params, handleClick}) {
 
   let validate = () => {
     const errors = {}
-    if (!startTimeStr) {
-      errors.startTimeStr = "Please set lease start time";
-    }
-    if (!endTimeStr) {
-      errors.endTimeStr = "Please set lease end time";
-    }
-    const startTime = new Date(startTimeStr);
-    const endTime = new Date(endTimeStr);
-    if (startTime >= endTime) {
-      errors.endTimeStr = "Lease end time must be later than the start time";
-    }
+    // if (!startTimeStr) {
+    //   errors.startTimeStr = "Please set lease start time";
+    // }
+    // if (!endTimeStr) {
+    //   errors.endTimeStr = "Please set lease end time";
+    // }
+    // const startTime = new Date(startTimeStr);
+    // const endTime = new Date(endTimeStr);
+    // if (startTime >= endTime) {
+    //   errors.endTimeStr = "Lease end time must be later than the start time";
+    // }
     if (!rent || rent <= 0) {
       errors.rent = "Please set a positive number for the rent price";
     }
@@ -79,9 +81,14 @@ export default function ListingCreationPage({params, handleClick}) {
       return;
     }
     const contract = await initContract(contractId);
-    const startTsNano = new Date(startTimeStr).valueOf() * MS_TO_NS_SCALE;
-    const endTsNano = new Date(endTimeStr).valueOf() * MS_TO_NS_SCALE;
+    
+    // const startTsNano = new Date(startTimeStr).valueOf() * MS_TO_NS_SCALE;
+    // const endTsNano = new Date(endTimeStr).valueOf() * MS_TO_NS_SCALE;
 
+    const now = new Date();
+    const startTsNano = now.valueOf() * MS_TO_NS_SCALE;
+    const endTsNano = new Date(now.setMonth(now.getMonth() + parseInt(subScription.split(" ")[0]))).valueOf() * MS_TO_NS_SCALE;
+    
     newListing(contract, tokenId, startTsNano, endTsNano, rentCurrency?.address, rent);
   };
 
@@ -105,7 +112,7 @@ export default function ListingCreationPage({params, handleClick}) {
               <NftInfo contractId={contractId} tokenId={tokenId} />
 
               <div className="space-y-6 sm:space-y-4">
-                <div className="sm:flex sm:flex-row mt-4">
+                {/* <div className="sm:flex sm:flex-row mt-4">
                   <label htmlFor="contract_addr" className="block sm:w-1/3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2" >
                     Start Time
                   </label>
@@ -126,6 +133,22 @@ export default function ListingCreationPage({params, handleClick}) {
                     <input className="input" type="datetime-local" value={endTimeStr} onChange={(e) => setEndTimeStr(e.target.value)} />
                     <p className="mt-2 text-sm text-gray-500">
                       When do you want your NFT to be returned
+                    </p>
+                  </div>
+                </div> */}
+                <div className="sm:flex sm:flex-row mt-4">
+                  <label htmlFor="contract_addr" className="block sm:w-1/3 text-sm font-medium text-gray-700 sm:mt-px sm:pt-2" >
+                    SubScription
+                  </label>
+                  <div className="mt-1 sm:w-2/3 sm:mt-0 max-w-lg">
+                    {errorMessage(validationErrors["subScription"])}
+                    <div className="w-1/3">
+                      <SubScriptionSelector
+                        selected={subScription}
+                        setSelected={setSubScription} />
+                    </div>
+                    <p className="mt-2 text-sm text-gray-500">
+                      When do you want to start renting your NFT
                     </p>
                   </div>
                 </div>

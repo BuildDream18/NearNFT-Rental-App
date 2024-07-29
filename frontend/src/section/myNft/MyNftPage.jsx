@@ -134,8 +134,8 @@ export default function MyNftPage({handleClick}) {
                     <div className="h-96">
                       <img className="w-full h-full" src={media} />
                     </div>
-                    {lender_id && lender_id != window.accountId || activeAccountId && <p className="text-ellipsis overflow-clip">Rented from: {lender_id}</p>}
-                    {borrower_id && borrower_id != window.accountId || activeAccountId && <p className="text-ellipsis overflow-clip">Rented to: {borrower_id}</p>}
+                    {lender_id && lender_id != (window.accountId || activeAccountId) && <p className="text-ellipsis overflow-clip">Rented from: {lender_id}</p>}
+                    {borrower_id && borrower_id != (window.accountId || activeAccountId) && <p className="text-ellipsis overflow-clip">Rented to: {borrower_id}</p>}
                     {lease_end_ts_nano && lease_end_ts_nano > Date.now() * MS_TO_NS_SCALE && <p className="text-ellipsis overflow-clip">
                       Lease ends: {durationString(lease_end_ts_nano - Date.now() * MS_TO_NS_SCALE)}
                     </p>}
@@ -147,7 +147,7 @@ export default function MyNftPage({handleClick}) {
                         <button onClick={() => handleClick({title: "lend", contractId: nft_contract_id, tokenId: token_id})} className="primary-btn flex-1 w-32 text-center"> Lend </button>
                       }
                       {lease_end_ts_nano && lease_end_ts_nano < Date.now() * MS_TO_NS_SCALE &&
-                        lender_id && lender_id == window.accountId || activeAccountId &&
+                        lender_id && lender_id == (window.accountId || activeAccountId) &&
                         <button onClick={() => claimBack(lease_id)} className="primary-btn flex-1 w-32 text-center"> Claim back </button>
                       }
                       <button onClick={() => handleClick({title: "details", contractId: nft_contract_id, tokenId: token_id})} 
