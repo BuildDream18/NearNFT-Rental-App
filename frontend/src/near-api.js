@@ -3,8 +3,7 @@ import { getConfig } from "./near-config";
 import { initFtContract } from "./FtContract";
 
 export const nearConfig = getConfig(process.env.MODE || "development");
-console.log(nearConfig);
-console.log(process.env.MODE);
+
 export function signOutNearWallet() {
   window.walletConnection.signOut();
   // reload page
@@ -18,6 +17,7 @@ export function signInWithNearWallet() {
 // Initialize contract & set global variables
 export async function initContract() {
   const { connect, Contract, keyStores, WalletConnection } = window.nearApi;
+  console.log(new keyStores.BrowserLocalStorageKeyStore());
   const near = await connect(
     Object.assign(
       { deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() } },
