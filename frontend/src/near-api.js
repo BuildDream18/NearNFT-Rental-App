@@ -4,6 +4,7 @@ import { initFtContract } from "./FtContract";
 
 export const nearConfig = getConfig(process.env.MODE || "development");
 console.log(nearConfig);
+console.log(process.env.MODE);
 export function signOutNearWallet() {
   window.walletConnection.signOut();
   // reload page
